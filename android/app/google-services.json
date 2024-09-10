@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "501364538277",
+    "project_id": "lactomate-bb4a6",
+    "storage_bucket": "lactomate-bb4a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501364538277:android:fa9cbf1bf9198f6f88c64c",
+        "android_client_info": {
+          "package_name": "com.example.lactomate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzIE-spr8KD7k181ECcFINTJXBOO699Tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
