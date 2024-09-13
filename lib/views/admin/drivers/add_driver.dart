@@ -8,6 +8,7 @@ import 'package:lactomate/utils/colors.dart';
 import 'package:lactomate/utils/constants.dart';
 import 'package:lactomate/utils/validators.dart';
 import 'package:lactomate/views/admin/drivers/add_drivers_bloc/add_driver_details_bloc.dart';
+import 'package:lactomate/widgets/custom_snack.dart';
 import 'package:lactomate/widgets/login_button.dart';
 import 'package:lactomate/widgets/textformfeild2.dart';
 
@@ -21,6 +22,7 @@ class AddDriver extends StatelessWidget {
     TextEditingController emailController = TextEditingController();
     TextEditingController dobController = TextEditingController();
     TextEditingController idProofController = TextEditingController();
+    TextEditingController driverIdController = TextEditingController();
     GlobalKey<FormState> formkey = GlobalKey<FormState>();
     String? profileimg;
     String? proofimage;
@@ -38,7 +40,18 @@ class AddDriver extends StatelessWidget {
       ),
       body: BlocConsumer<AddDriverDetailsBloc, AddDriverDetailsState>(
         listener: (context, state) {
-         
+          if (state.status == DriverUploadStatus.sucess) {
+            ScaffoldMessenger.of(context).showSnackBar(customSnack(
+                'Updating Details',
+                'Details are being added',
+                const Icon(
+                  Icons.done,
+                  color: Colors.green,
+                  size: 28,
+                ),
+                Colors.green));
+            Navigator.of(context).pop();
+          }
         },
         builder: (context, state) {
           return Stack(
@@ -72,8 +85,10 @@ class AddDriver extends StatelessWidget {
                                 await ProjectFunctionalites().imagePickercir();
 
                             if (img != null) {
-                              context.read<AddDriverDetailsBloc>().add(DriverImageChnages(img));
-                              profileimg=img.path;
+                              context
+                                  .read<AddDriverDetailsBloc>()
+                                  .add(DriverImageChnages(img.path));
+                              profileimg = img.path;
                             }
                           },
                           child: CircleAvatar(
@@ -91,7 +106,9 @@ class AddDriver extends StatelessWidget {
                         ),
                         AppConstants.kheight20,
                         CustomTextFeild2(
-                          onChanged: (p0) => context.read<AddDriverDetailsBloc>().add(DriverNameChanges(p0)),
+                            onChanged: (p0) => context
+                                .read<AddDriverDetailsBloc>()
+                                .add(DriverNameChanges(p0)),
                             controller: nameController,
                             heading: 'Full Name',
                             hinttext: 'Full Name',
@@ -99,7 +116,9 @@ class AddDriver extends StatelessWidget {
                                 Validators.validateName(value)),
                         AppConstants.kheight20,
                         CustomTextFeild2(
-                          onChanged: (p0) => context.read<AddDriverDetailsBloc>().add(DriverPhoneChnages(int.parse(p0))),
+                          onChanged: (p0) => context
+                              .read<AddDriverDetailsBloc>()
+                              .add(DriverPhoneChnages(int.parse(p0))),
                           controller: phoneController,
                           heading: 'Phone Number',
                           hinttext: 'Phone Number',
@@ -109,26 +128,35 @@ class AddDriver extends StatelessWidget {
                         ),
                         AppConstants.kheight20,
                         CustomTextFeild2(
-                          onChanged: (p0) =>  context.read<AddDriverDetailsBloc>().add(DriverEmailChnages(p0)),
+                            onChanged: (p0) => context
+                                .read<AddDriverDetailsBloc>()
+                                .add(DriverEmailChnages(p0)),
                             controller: emailController,
                             heading: 'Email Address',
                             hinttext: 'Email Address',
                             keybordtype: TextInputType.emailAddress,
                             validator: (value) =>
                                 Validators.validateEmail(value)),
+
                         AppConstants.kheight20,
                         CustomTextFeild2(
-                          readOnly: true,  
-                      onChanged: (p0) =>  context.read<AddDriverDetailsBloc>().add(DriverDobChnages(p0)),
-                          sufixbutton: const Icon(
-                            Icons.calendar_month,
-                            size: 20,
-                          ),
-                          tap: () {},
+                            onChanged: (p0) => context
+                                .read<AddDriverDetailsBloc>()
+                                .add(DriverId(p0)),
+                            controller: driverIdController,
+                            heading: 'Driver Code',
+                            hinttext: 'Driver Code',
+                            keybordtype: TextInputType.emailAddress,
+                            validator: (value) =>
+                                Validators.validateName(value)),
+                        AppConstants.kheight20,
+                        CustomTextFeild2(
+                          onChanged: (p0) => context
+                              .read<AddDriverDetailsBloc>()
+                              .add(DriverDobChnages(p0)),
                           controller: dobController,
                           heading: 'Date of Birth',
                           hinttext: '12-Sept-2002',
-
                           validator: (p0) {
                             if (p0 == null || p0.isEmpty) {
                               return 'Selec DOB';
@@ -214,13 +242,34 @@ class AddDriver extends StatelessWidget {
                                 ))),
                         AppConstants.kheight30,
                         GestureDetector(
-                            // onTap: () async {
-                            //   if(formkey.currentState!.validate()){
-                            //     if(proofimage!=null&&profileimg!=null){
-                            //       await ProjectFunctionalites().uploadImageToFirebase(proofimag);
-                            //     }
-                            //   }
-                            // },
+                            onTap: () async {
+                              String? firebaseproof;
+                              String? firebaseimg;
+                              if (formkey.currentState!.validate()) {
+                                print(profileimg);
+                                print(idProofController.text);
+                                if (proofimage != null && profileimg != null) {
+                                  firebaseproof = await ProjectFunctionalites()
+                                      .uploadImageToFirebase(
+                                          File(idProofController.text));
+                                  firebaseimg = await ProjectFunctionalites()
+                                      .uploadImageToFirebase(File(profileimg!));
+                                  print(firebaseproof);
+                                  print(firebaseimg);
+                                  context
+                                      .read<AddDriverDetailsBloc>()
+                                      .add(DriverImageChnages(firebaseimg!));
+
+                                  context.read<AddDriverDetailsBloc>().add(
+                                      DriverLicenseImageChnages(
+                                          firebaseproof!));
+
+                                  context
+                                      .read<AddDriverDetailsBloc>()
+                                      .add(DriverFormSubmit());
+                                }
+                              }
+                            },
                             child: LoginContainer(content: 'Submit')),
                       ],
                     ),

@@ -50,7 +50,7 @@ class WorkerLoginPage extends StatelessWidget {
                   obscure: true,
                   hinttext: 'Enter your Password',
                   controller: passController,
-                  sufixbutton: const Icon(Icons.remove_red_eye_sharp),
+                  sufixbutton:  IconButton(onPressed: (){},icon: Icon(Icons.remove_red_eye),),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Enter your password';

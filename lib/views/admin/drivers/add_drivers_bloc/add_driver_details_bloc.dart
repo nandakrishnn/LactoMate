@@ -15,16 +15,22 @@ class AddDriverDetailsBloc
     on<DriverEmailChnages>(_driverEmailChnages);
     on<DriverLicenseImageChnages>(_driverLicenseImgChnages);
     on<DriverDobChnages>(_driverDobChnages);
+    on<DriverId>(_driverId);
     on<DriverFormSubmit>(_formSubmit);
   }
   void _driverimageChnages(
       DriverImageChnages event, Emitter<AddDriverDetailsState> emit) {
+        print(state.driverImg);
     emit(state.copyWith(driverImg: event.img));
   }
 
   void _driverNameChnages(
       DriverNameChanges event, Emitter<AddDriverDetailsState> emit) {
     emit(state.copyWith(driverName: event.driverName));
+  }
+   void _driverId(
+      DriverId event, Emitter<AddDriverDetailsState> emit) {
+    emit(state.copyWith(driverId: event.driverId));
   }
 
   void _driverPhoneChnages(
@@ -53,6 +59,7 @@ class AddDriverDetailsBloc
     try {
       final id = randomAlphaNumeric(6);
       final driverMap = driverService.workerDetails(
+        driverCode: state.driverId!,
           id: id,
           driverImg: state.driverImg!,
           driverName: state.driverName!,
@@ -62,12 +69,12 @@ class AddDriverDetailsBloc
           driverDob: state.driverDob!);
       final added = await driverService.saveDriverDetils(id, driverMap);
       if (added == true) {
-        state.copyWith(status: DriverUploadStatus.sucess);
+       emit( state.copyWith(status: DriverUploadStatus.sucess));
       } else {
-        state.copyWith(status: DriverUploadStatus.failure);
+        emit(state.copyWith(status: DriverUploadStatus.failure));
       }
     } catch (e) {
-      state.copyWith(status: DriverUploadStatus.failure);
+       emit(state.copyWith(status: DriverUploadStatus.failure));
     }
   }
 }

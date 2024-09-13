@@ -45,7 +45,7 @@ class CustomTextFeild2 extends StatelessWidget {
       children: [
         Text(heading,
             style:  TextStyle(
-              color: AppColors.appcolorCream,
+              color: AppColors.appcolorBlack,
               fontSize: 14,
               fontWeight: FontWeight.w700,
             )),

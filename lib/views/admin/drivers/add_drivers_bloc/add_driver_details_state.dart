@@ -7,12 +7,14 @@ enum DriverUploadStatus{inital,pending,sucess,failure}
      this.driverEmail='',
      this.driverImg='',
      this.driverLicenseImg='',
+     this.driverId='',
      this.driverName='',
      this.driverPhone=0,
      this.status=DriverUploadStatus.inital
   });
  final String? id;
  final String? driverName;
+ final String?driverId;
  final DriverUploadStatus status;
  final int? driverPhone;
 final  String? driverDob;
@@ -22,6 +24,7 @@ final  String? driverDob;
  AddDriverDetailsState copyWith({
   final String? id,
  final String? driverName,
+  final String?driverId,
  final DriverUploadStatus? status,
  final int? driverPhone,
  final  String? driverDob,
@@ -29,6 +32,7 @@ final  String? driverDob;
  final String? driverLicenseImg,
  final String? driverImg,
  })=>AddDriverDetailsState(
+  driverId: driverId??this.driverId,
 id: id??this.id,
 driverName: driverName??this.driverName,
 status: status??this.status,

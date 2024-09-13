@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DriverService{
-
-  Future<bool>saveDriverDetils(String id,Map<String,dynamic>driverDetails)async{
+class ShopService{
+   Future<bool>saveDriverDetils(String id,Map<String,dynamic>shopDetails)async{
   try {
-    await FirebaseFirestore.instance.collection("DriverDetails").doc(id).set(driverDetails);
+    await FirebaseFirestore.instance.collection("ShopDetails").doc(id).set(shopDetails);
     return true;
   } catch (e) {
     return false;
   }
  }
-Map<String,dynamic>workerDetails({
+Map<String,dynamic>shopDetails({
 required String id,
 required String driverImg,
 required String driverName,
@@ -21,9 +20,9 @@ required String driverDob,
 required String driverCode,
 
 }){
-Map<String,dynamic>workerDetails={
+Map<String,dynamic>shopDetails={
 'DriverCode':driverCode,
-'DriverId':id,
+'ShopId':id,
 'DriverImg':driverImg,
 'DriverName':driverName,
 'DriverEmail':driverEmail,
@@ -31,11 +30,7 @@ Map<String,dynamic>workerDetails={
 'DriverLicenseImg':driverLicenseImg,
 'DriverDob':driverDob
 };
-return workerDetails;
+return shopDetails;
 }
 
-Stream<QuerySnapshot<Object?>> getWorkerDetails(){
-  return FirebaseFirestore.instance.collection("DriverDetails").snapshots();
-
-}
 }

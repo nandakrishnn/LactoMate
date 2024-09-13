@@ -23,7 +23,7 @@ class CustomTextFeild extends StatelessWidget {
   Widget? suffix;
   bool obscure;
 
-  Icon? sufixbutton;
+  IconButton? sufixbutton;
   Icon? prefixIcon;
   TextEditingController? controller;
   String? Function(String?)? validator;
