@@ -12,15 +12,21 @@ class RouteService{
   Map<String,dynamic>shopDetails({
 required String id,
 required String routeName,
+required String driverId,
 required List<Map<String,dynamic>>shopDetails1,
 
 }){
 Map<String,dynamic>shopDetails={
 'RouteName':routeName,
+'AssignedDriver':driverId,
 'RouteId':id,
 'RouteDetails':shopDetails1
 
 };
 return shopDetails;
+}
+Stream<QuerySnapshot<Object?>> getRouteDetails(){
+  return FirebaseFirestore.instance.collection("RouteDetails").snapshots();
+
 }
 }

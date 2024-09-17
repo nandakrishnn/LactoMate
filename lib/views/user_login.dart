@@ -1,9 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:lactomate/services/driver_service.dart';
 import 'package:lactomate/utils/constants.dart';
 import 'package:lactomate/utils/validators.dart';
 import 'package:lactomate/views/admin/admin_home.dart';
+import 'package:lactomate/views/driver_view/home_driver.dart';
 import 'package:lactomate/widgets/login_button.dart';
 import 'package:lactomate/widgets/route_animations.dart';
 import 'package:lactomate/widgets/textformfeild.dart';
@@ -14,7 +16,7 @@ class WorkerLoginPage extends StatelessWidget {
   final String adminPass = '123456';
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
-  final formKey = GlobalKey<FormState>(); 
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +52,15 @@ class WorkerLoginPage extends StatelessWidget {
                   obscure: true,
                   hinttext: 'Enter your Password',
                   controller: passController,
-                  sufixbutton:  IconButton(onPressed: (){},icon: Icon(Icons.remove_red_eye),),
+                  sufixbutton: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.remove_red_eye),
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Enter your password';
                     }
-                    if (value.length < 6) {
+                    if (value.length < 4) {
                       return 'Password must be at least 8 characters long';
                     }
                     return null;
@@ -66,15 +71,33 @@ class WorkerLoginPage extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * .04,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    // Check if the form is valid
+                  onTap: () async {
                     if (formKey.currentState!.validate()) {
-                      // Validate form using the GlobalKey
-                      if (emailController.text == adminEmail &&
-                          passController.text == adminPass) {
-                        Navigator.of(context).push(createRoute(AdminHome()));
-                      } else {
-                        // Handle incorrect credentials here
+                      try {
+                        if (emailController.text == adminEmail &&
+                            passController.text == adminPass) {
+                          Navigator.of(context).push(createRoute(AdminHome()));
+                        } else {
+                          bool isDriver = await DriverService()
+                              .checkEmailAndWorkCode(
+                                  emailController.text, passController.text);
+
+                          if (isDriver) {
+                            Navigator.of(context)
+                                .push(createRoute(DrivesWorkSpace()));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'Invalid credentials. Please try again.')),
+                            );
+                          }
+                        }
+                      } catch (e) {
+                        print('Error checking email and work code: $e');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('An error occurred: $e')),
+                        );
                       }
                     }
                   },
@@ -82,7 +105,6 @@ class WorkerLoginPage extends StatelessWidget {
                     content: 'Login',
                   ),
                 ),
-             
               ],
             ),
           ),
@@ -90,4 +112,6 @@ class WorkerLoginPage extends StatelessWidget {
       ),
     );
   }
+
+ 
 }

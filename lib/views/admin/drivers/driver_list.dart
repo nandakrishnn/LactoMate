@@ -102,8 +102,9 @@ final data;
                 backgroundImage: NetworkImage(img),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 20, left: 35),
+                padding: const EdgeInsets.only(top: 20, left: 20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,12 +126,15 @@ final data;
                         )
                       ],
                     ),
-                    Text(
-                      email,
-                      style: TextStyle(
-                          color: AppColors.appcolorCream,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: Text(
+                        overflow: TextOverflow.ellipsis,
+                        email,
+                        style: TextStyle(
+                            color: AppColors.appcolorCream,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ),
                     )
                   ],
                 ),

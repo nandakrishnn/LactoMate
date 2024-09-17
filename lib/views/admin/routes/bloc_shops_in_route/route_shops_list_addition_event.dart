@@ -9,6 +9,10 @@ class RouteIdChanges extends RouteShopsListAdditionEvent{
   final String routeId;
   RouteIdChanges(this.routeId);
 }
+class DriverIdChanges extends RouteShopsListAdditionEvent{
+  final String driverId;
+  DriverIdChanges(this.driverId);
+}
 class ShopDetailsChanges extends RouteShopsListAdditionEvent{
   final List<Map<String,dynamic>>shopDetails;
   ShopDetailsChanges(this.shopDetails);

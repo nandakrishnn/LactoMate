@@ -1,16 +1,20 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lactomate/services/shop_service.dart';
 
 import 'package:lactomate/utils/constants.dart';
 import 'package:lactomate/utils/validators.dart';
+
 import 'package:lactomate/views/admin/routes/bloc_shops_in_route/route_shops_list_addition_bloc.dart';
 import 'package:lactomate/views/admin/shops/bloc_get_shop/get_shop_details_bloc.dart';
 import 'package:lactomate/widgets/custom_snack.dart';
+import 'package:lactomate/widgets/driver_selecting_route,.dart';
 import 'package:lactomate/widgets/login_button.dart';
 import 'package:lactomate/widgets/textformfeild2.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddRouteDetails extends StatelessWidget {
   const AddRouteDetails({super.key});
@@ -19,6 +23,7 @@ class AddRouteDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController();
     TextEditingController shopsController = TextEditingController();
+
     List<Map<String, dynamic>> selectedShops = [];
     GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
@@ -72,7 +77,7 @@ class AddRouteDetails extends StatelessWidget {
                         selectedShops.clear();
                         state.status = RouteDetailsUploadStatus.inital;
                         // Reset the BLoC state
-
+updateDriversRoute();
                         // Pop the screen
                         Navigator.of(context).pop();
                       }
@@ -98,7 +103,6 @@ class AddRouteDetails extends StatelessWidget {
                               validator: (value) =>
                                   Validators.validateName(value)),
                           AppConstants.kheight20,
-
                           CustomTextFeild2(
                             controller: shopsController,
                             heading: 'Add Shops',
@@ -249,22 +253,10 @@ class AddRouteDetails extends StatelessWidget {
                               );
                             },
                           ),
-
                           AppConstants.kheight20,
-                          // CustomTextFeild2(
-                          //   readOnly: true,
-                          //   controller: idProofController,
-                          //   sufixbutton: const Icon(Icons.attachment),
-                          //   tap: () async {},
-                          //   hinttext: 'Driving Licence',
-                          //   heading: 'Driving Licence',
-                          //   validator: (value) {
-                          //     if (value == null || value.isEmpty) {
-                          //       return 'Please add your DL';
-                          //     }
-                          //     return null;
-                          //   },
-                          // ),
+                          RouteDriverSelectingWidget(),
+                          AppConstants.kheight20,
+                          AppConstants.kheight20,
                           AppConstants.kheight10,
                           LoginContainer(
                             content: 'Submit',
@@ -291,4 +283,48 @@ class AddRouteDetails extends StatelessWidget {
           ],
         ));
   }
+
+
+
+Future<bool> updateDriversRoute() async {
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    final choosenDriverRoute = prefs.getString('ChoosenDriverRoute');
+  
+    final routeId = prefs.getString('RouteId');
+    if (choosenDriverRoute == null || routeId == null) {
+      print('Driver route or route ID is missing');
+      return false;
+    }
+
+
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('DriverDetails')
+        .where('DriverId', isEqualTo: choosenDriverRoute)
+        .get();
+
+    if (querySnapshot.docs.isEmpty) {
+      print('No matching driver found');
+      return false;
+    }
+
+    // Update the specific field in each document found
+    for (final doc in querySnapshot.docs) {
+      await FirebaseFirestore.instance
+          .collection('DriverDetails')
+          .doc(doc.id)
+          .update({
+        'DriverRoute': routeId, // Replace 'RouteId' with the actual field name you want to update
+      });
+    }
+
+    print('Driver(s) updated successfully');
+    return true;
+  } catch (e) {
+    print('Error updating drivers route: $e');
+    return false;
+  }
+}
+
 }

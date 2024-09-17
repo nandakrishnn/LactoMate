@@ -9,6 +9,7 @@ import 'package:lactomate/services/route_service.dart';
 import 'package:lactomate/services/shop_service.dart';
 import 'package:lactomate/views/admin/drivers/add_drivers_bloc/add_driver_details_bloc.dart';
 import 'package:lactomate/views/admin/drivers/get_diriver_home/get_cart_details_user_bloc.dart';
+import 'package:lactomate/views/admin/routes/bloc_get_route_detail/get_route_detail_bloc.dart';
 import 'package:lactomate/views/admin/routes/bloc_shops_in_route/route_shops_list_addition_bloc.dart';
 import 'package:lactomate/views/admin/shops/bloc_add_shop/shop_details_addition_bloc.dart';
 import 'package:lactomate/views/admin/shops/bloc_get_shop/get_shop_details_bloc.dart';
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
        ),
        BlocProvider(
         create: (context) => RouteShopsListAdditionBloc(RouteService()),
+       ),
+       BlocProvider(
+        create: (context) => GetRouteDetailBloc(RouteService()),
        )
       ],
       
