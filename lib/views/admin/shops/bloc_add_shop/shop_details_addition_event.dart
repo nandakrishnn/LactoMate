@@ -12,6 +12,7 @@ part of 'shop_details_addition_bloc.dart';
     final String image;
     ShopImageChnages(this.image);
   }
+  
   final class ShopPayLoadChanges extends ShopDetailsAdditionEvent{
     final dynamic payload;
     ShopPayLoadChanges(this.payload);

@@ -52,6 +52,18 @@ class AddDriver extends StatelessWidget {
                 Colors.green));
             Navigator.of(context).pop();
           }
+          if(state.status==DriverUploadStatus.failure){
+              ScaffoldMessenger.of(context).showSnackBar(customSnack(
+                'Updating Details Failed',
+                'Details not  added',
+                const Icon(
+                  Icons.error,
+                  color: Colors.red,
+                  size: 28,
+                ),
+                Colors.red));
+            Navigator.of(context).pop();
+          }
         },
         builder: (context, state) {
           return Stack(
@@ -59,8 +71,8 @@ class AddDriver extends StatelessWidget {
               SizedBox(
                 height: double.infinity,
                 width: double.infinity,
-                child: Image.network(
-                  'https://images.pexels.com/photos/93398/pexels-photo-93398.jpeg',
+                child: Image.asset(
+                  'assets/pexels-photo-93398 (1).jpeg',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -263,7 +275,7 @@ class AddDriver extends StatelessWidget {
                                   context.read<AddDriverDetailsBloc>().add(
                                       DriverLicenseImageChnages(
                                           firebaseproof!));
-
+                                        context.read<AddDriverDetailsBloc>().add(DriverRouteChnages(''));
                                   context
                                       .read<AddDriverDetailsBloc>()
                                       .add(DriverFormSubmit());

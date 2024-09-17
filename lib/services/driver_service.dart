@@ -15,6 +15,7 @@ required String id,
 required String driverImg,
 required String driverName,
 required String driverEmail,
+required String driverRoute,
 required int driverPhone,
 required String driverLicenseImg,
 required String driverDob,
@@ -24,6 +25,7 @@ required String driverCode,
 Map<String,dynamic>workerDetails={
 'DriverCode':driverCode,
 'DriverId':id,
+'DriverRoute':driverRoute,
 'DriverImg':driverImg,
 'DriverName':driverName,
 'DriverEmail':driverEmail,
@@ -38,4 +40,5 @@ Stream<QuerySnapshot<Object?>> getWorkerDetails(){
   return FirebaseFirestore.instance.collection("DriverDetails").snapshots();
 
 }
+
 }

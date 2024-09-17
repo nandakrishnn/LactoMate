@@ -16,6 +16,7 @@ class AddDriverDetailsBloc
     on<DriverLicenseImageChnages>(_driverLicenseImgChnages);
     on<DriverDobChnages>(_driverDobChnages);
     on<DriverId>(_driverId);
+    on<DriverRouteChnages>(_driverRouteChnages);
     on<DriverFormSubmit>(_formSubmit);
   }
   void _driverimageChnages(
@@ -27,6 +28,10 @@ class AddDriverDetailsBloc
   void _driverNameChnages(
       DriverNameChanges event, Emitter<AddDriverDetailsState> emit) {
     emit(state.copyWith(driverName: event.driverName));
+  }
+    void _driverRouteChnages(
+      DriverRouteChnages event, Emitter<AddDriverDetailsState> emit) {
+    emit(state.copyWith(driverRoute: event.driverRoute));
   }
    void _driverId(
       DriverId event, Emitter<AddDriverDetailsState> emit) {
@@ -59,6 +64,7 @@ class AddDriverDetailsBloc
     try {
       final id = randomAlphaNumeric(6);
       final driverMap = driverService.workerDetails(
+        driverRoute: state.driverRoute!,
         driverCode: state.driverId!,
           id: id,
           driverImg: state.driverImg!,

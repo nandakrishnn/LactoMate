@@ -11,26 +11,28 @@ class ShopService{
  }
 Map<String,dynamic>shopDetails({
 required String id,
-required String driverImg,
-required String driverName,
-required String driverEmail,
-required int driverPhone,
-required String driverLicenseImg,
-required String driverDob,
-required String driverCode,
+required String shopName,
+required String shopImage,
+ required   dynamic shopWeight,
+ required dynamic shopAdress,
+ required dynamic latitiude,
+ required dynamic longitue,
 
 }){
 Map<String,dynamic>shopDetails={
-'DriverCode':driverCode,
+'ShopName':shopName,
 'ShopId':id,
-'DriverImg':driverImg,
-'DriverName':driverName,
-'DriverEmail':driverEmail,
-'DriverPhone':driverPhone,
-'DriverLicenseImg':driverLicenseImg,
-'DriverDob':driverDob
+'ShopImage':shopImage,
+'ShopAdress':shopAdress,
+'PayLoad':shopWeight,
+'Longitude':longitue,
+'Latitude':latitiude,
+
 };
 return shopDetails;
 }
+Stream<QuerySnapshot<Object?>> getShopDetails(){
+  return FirebaseFirestore.instance.collection("ShopDetails").snapshots();
 
+}
 }

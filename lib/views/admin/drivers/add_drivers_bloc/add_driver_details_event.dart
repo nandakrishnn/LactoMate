@@ -25,6 +25,10 @@ part of 'add_driver_details_bloc.dart';
   final String driverDob;
   DriverDobChnages(this.driverDob);
  }
+    final class DriverRouteChnages extends AddDriverDetailsEvent{
+  final String driverRoute;
+  DriverRouteChnages(this.driverRoute);
+ }
    final class DriverId extends AddDriverDetailsEvent{
   final String driverId;
   DriverId(this.driverId);

@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:lactomate/services/shop_service.dart';
+import 'package:random_string/random_string.dart';
 
 part 'shop_details_addition_event.dart';
 part 'shop_details_addition_state.dart';
 
 class ShopDetailsAdditionBloc extends Bloc<ShopDetailsAdditionEvent, ShopDetailsAdditionState> {
-  ShopDetailsAdditionBloc() : super(ShopDetailsAdditionState()) {
+  final ShopService shopService;
+  ShopDetailsAdditionBloc(this.shopService) : super(ShopDetailsAdditionState()) {
    on<ShopNameChnages>(_shopNameChanges);
    on<ShopImageChnages>(_shopImageChanges);
    on<ShopPayLoadChanges>(_shopPayLodChanges);
@@ -32,12 +34,19 @@ class ShopDetailsAdditionBloc extends Bloc<ShopDetailsAdditionEvent, ShopDetails
    void _shopAdressChanges(ShopAdressChnages event,Emitter<ShopDetailsAdditionState>emit){
     emit(state.copyWith(shopAdress: event.adress));
   }
-   void _formSubmit(ShopFormSubmit event,Emitter<ShopDetailsAdditionState>emit){
+   void _formSubmit(ShopFormSubmit event,Emitter<ShopDetailsAdditionState>emit)async{
     emit(state.copyWith(status: ShopDetailsStatus.pending));
     try {
-      
+      final id=randomAlphaNumeric(5);
+      final shopDetails= shopService.shopDetails(id: id, shopName: state.nameShop!, shopImage: state.imgurl!, shopWeight: state.shopWeight, shopAdress: state.shopAdress, latitiude: state.latitiude, longitue: state.longitue);
+          final added=await shopService.saveDriverDetils(id, shopDetails);
+          if(added==true){
+            emit(state.copyWith(status: ShopDetailsStatus.sucess));
+          }else{
+                emit(state.copyWith(status: ShopDetailsStatus.failure));
+          }
     } catch (e) {
-      
+       emit(state.copyWith(status: ShopDetailsStatus.failure));
     }
   }
 }

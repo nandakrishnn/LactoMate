@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lactomate/utils/colors.dart';
 import 'package:lactomate/utils/constants.dart';
 import 'package:lactomate/views/admin/drivers/driver_list.dart';
+import 'package:lactomate/views/admin/routes/routes_list.dart';
 import 'package:lactomate/views/admin/shops/shop_adding.dart';
 import 'package:lactomate/widgets/route_animations.dart';
 
@@ -68,7 +69,19 @@ class AdminHome extends StatelessWidget {
                                         ),
                       ),
               ],
-            )
+            ),
+                  AppConstants.kwidth10,
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).push(createRoute(const RoutesList()));
+                        },
+                        
+                        child: Container(
+                                          height: 140.h,
+                                          width: 167.w,
+                                          color: AppColors.appcolorBlack,
+                                        ),
+                      ),
           ],
         ),
       ),

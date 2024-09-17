@@ -5,8 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lactomate/firebase_options.dart';
 import 'package:lactomate/services/driver_service.dart';
+import 'package:lactomate/services/shop_service.dart';
 import 'package:lactomate/views/admin/drivers/add_drivers_bloc/add_driver_details_bloc.dart';
 import 'package:lactomate/views/admin/drivers/get_diriver_home/get_cart_details_user_bloc.dart';
+import 'package:lactomate/views/admin/shops/bloc_add_shop/shop_details_addition_bloc.dart';
+import 'package:lactomate/views/admin/shops/bloc_get_shop/get_shop_details_bloc.dart';
 import 'package:lactomate/views/user_login.dart';
 
 
@@ -32,6 +35,12 @@ class MyApp extends StatelessWidget {
        BlocProvider(
         create: (context) => GetWorkerDetailsUserBloc(DriverService()),
     
+       ),
+       BlocProvider(
+        create: (context) => ShopDetailsAdditionBloc(ShopService()),
+       ),
+       BlocProvider(
+        create: (context) => GetShopDetailsBloc(ShopService()),
        )
       ],
       
