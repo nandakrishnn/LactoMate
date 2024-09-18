@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DriverService{
 
@@ -54,9 +55,9 @@ Stream<QuerySnapshot<Object?>> getWorkerDetails(){
           .where('DriverCode', isEqualTo: workCode)
           .get();
 
-      // final dynamic documentId = querySnapshot.docs.first.id;
-      // SharedPreferences prefs = await SharedPreferences.getInstance();
-      // await prefs.setString('WorkerId', documentId);
+      final dynamic documentId = querySnapshot.docs.first.id;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('WorkerId', documentId);
 
       return querySnapshot.docs.isNotEmpty;
     } catch (e) {

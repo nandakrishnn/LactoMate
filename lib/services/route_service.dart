@@ -29,4 +29,11 @@ Stream<QuerySnapshot<Object?>> getRouteDetails(){
   return FirebaseFirestore.instance.collection("RouteDetails").snapshots();
 
 }
+Stream<QuerySnapshot> getDriverRouteDetails(String id) {
+  return FirebaseFirestore.instance
+      .collection("RouteDetails")
+      .where('AssignedDriver', isEqualTo: id)
+      .snapshots();
+}
+
 }

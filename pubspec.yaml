@@ -31,6 +31,7 @@ dependencies:
   bloc: ^8.1.4
   cloud_firestore: ^5.4.1
   cupertino_icons: ^1.0.6
+  easy_stepper: ^0.8.5+1
   equatable: ^2.0.5
   firebase_auth: ^5.2.0
   firebase_core: ^3.4.0
@@ -41,6 +42,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   http: ^1.2.2
   image_picker: ^1.1.2
+  location: ^6.0.2
   mapbox_gl: ^0.16.0
   permission_handler: ^11.3.1
   random_string: ^2.3.1

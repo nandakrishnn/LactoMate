@@ -10,12 +10,25 @@ class GetRouteDetailBloc extends Bloc<GetRouteDetailEvent, GetRouteDetailState> 
   final RouteService routeService;
   GetRouteDetailBloc(this.routeService) : super(GetRouteDetailInitial()) {
    on<FetchRouteDetails>(_fetchRouteDetails);
+   on<FetchDriverData>(_fetchDriverTaskDetails);
    on<FetchedRouteDetails>(_fetchedRouteDetails);
   }
     void _fetchRouteDetails(FetchRouteDetails event,Emitter<GetRouteDetailState>emit)async{
       emit(GetRouteDetailLoading());
       try {
         Stream<QuerySnapshot>routeStream= routeService.getRouteDetails();
+        routeStream.listen((snapshot){
+          final data=snapshot.docs;
+          add(FetchedRouteDetails(data));
+        });
+      } catch (e) {
+        emit(GetRouteDetailFailure(e.toString()));
+      }
+    }
+     void _fetchDriverTaskDetails(FetchDriverData event,Emitter<GetRouteDetailState>emit)async{
+      emit(GetRouteDetailLoading());
+      try {
+        Stream<QuerySnapshot>routeStream= routeService.getDriverRouteDetails(event.workerId);
         routeStream.listen((snapshot){
           final data=snapshot.docs;
           add(FetchedRouteDetails(data));

@@ -16,6 +16,12 @@ final class GetRouteDetailLoaded extends GetRouteDetailState {
    @override
   List<Object> get props => [data];
 }
+final class GetRouteDetailLoadedMap extends GetRouteDetailState {
+  List<Map<String,dynamic>>data;
+  GetRouteDetailLoadedMap(this.data);
+   @override
+  List<Object> get props => [data];
+}
 final class GetRouteDetailFailure extends GetRouteDetailState{
   final String errorMsg;
   GetRouteDetailFailure(this.errorMsg);
