@@ -5,6 +5,7 @@ import 'package:lactomate/services/driver_service.dart';
 import 'package:lactomate/utils/constants.dart';
 import 'package:lactomate/utils/validators.dart';
 import 'package:lactomate/views/admin/admin_home.dart';
+import 'package:lactomate/views/driver_view/bottom_nav_worker.dart';
 import 'package:lactomate/views/driver_view/home_driver.dart';
 import 'package:lactomate/widgets/login_button.dart';
 import 'package:lactomate/widgets/route_animations.dart';
@@ -84,11 +85,11 @@ class WorkerLoginPage extends StatelessWidget {
                                   emailController.text, passController.text);
 
                           if (isDriver) {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            final workerId = prefs.getString('WorkerId');
+                            // SharedPreferences prefs =
+                            //     await SharedPreferences.getInstance();
+                            // final workerId = prefs.getString('WorkerId');
                             Navigator.of(context)
-                                .push(createRoute(DrivesWorkSpace(workerId: workerId!,)));
+                                .push(createRoute(BottomNavigation()));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

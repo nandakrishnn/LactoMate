@@ -14,12 +14,14 @@ required String id,
 required String shopName,
 required String shopImage,
  required   dynamic shopWeight,
+ required dynamic timeStamp,
  required dynamic shopAdress,
  required dynamic latitiude,
  required dynamic longitue,
 
 }){
 Map<String,dynamic>shopDetails={
+'DeliveryTimeStamp':timeStamp,
 'ShopName':shopName,
 'ShopId':id,
 'ShopImage':shopImage,

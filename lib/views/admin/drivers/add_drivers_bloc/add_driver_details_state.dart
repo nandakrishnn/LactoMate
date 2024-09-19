@@ -17,7 +17,7 @@ enum DriverUploadStatus{inital,pending,sucess,failure}
  final String? driverRoute;
  final String? driverName;
  final String?driverId;
- final DriverUploadStatus status;
+  DriverUploadStatus status;
  final int? driverPhone;
 final  String? driverDob;
  final String? driverEmail;

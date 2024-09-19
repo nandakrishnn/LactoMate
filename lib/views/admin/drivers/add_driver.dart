@@ -50,6 +50,13 @@ class AddDriver extends StatelessWidget {
                   size: 28,
                 ),
                 Colors.green));
+              
+                  nameController.clear();
+                        phoneController.clear();
+                        emailController.clear();
+                         driverIdController.clear();
+                        dobController.clear();
+                  state.status=DriverUploadStatus.inital;
             Navigator.of(context).pop();
           }
           if(state.status==DriverUploadStatus.failure){
@@ -276,6 +283,7 @@ class AddDriver extends StatelessWidget {
                                       DriverLicenseImageChnages(
                                           firebaseproof!));
                                         context.read<AddDriverDetailsBloc>().add(DriverRouteChnages(''));
+                                        customSnack('Adding details ', 'Wait for the confirmation', Icon(Icons.pending,), Colors.blue);
                                   context
                                       .read<AddDriverDetailsBloc>()
                                       .add(DriverFormSubmit());

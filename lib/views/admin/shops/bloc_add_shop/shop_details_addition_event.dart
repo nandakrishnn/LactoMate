@@ -29,6 +29,10 @@ part of 'shop_details_addition_bloc.dart';
     final dynamic adress ;
     ShopAdressChnages(this.adress);
   }
+       final class ShopTimeStamp extends ShopDetailsAdditionEvent{
+    final dynamic timestamp ;
+    ShopTimeStamp(this.timestamp);
+  }
   final class ShopFormSubmit extends ShopDetailsAdditionEvent{
 
   }

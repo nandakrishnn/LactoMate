@@ -9,6 +9,7 @@ class ShopDetailsAdditionState {
       this.nameShop = '',
       this.latitiude = '',
       this.shopAdress = '',
+      this.deliveryStatus='',
       this.longitue = '',
       this.status = ShopDetailsStatus.inital,
       this.shopWeight = 0});
@@ -20,18 +21,21 @@ class ShopDetailsAdditionState {
   dynamic latitiude;
   ShopDetailsStatus status;
   dynamic longitue;
-
+  dynamic deliveryStatus;
   ShopDetailsAdditionState copyWith({
     String? id,
     String? imgurl,
     String? nameShop,
+    dynamic deliveryStatus,
     dynamic shopWeight,
     dynamic shopAdress,
     dynamic latitiude,
     dynamic longitue,
     ShopDetailsStatus? status,
+
   }) =>
       ShopDetailsAdditionState(
+        deliveryStatus: deliveryStatus??this.deliveryStatus,
           status: status ?? this.status,
           id: id ?? this.id,
           imgurl: imgurl ?? this.imgurl,

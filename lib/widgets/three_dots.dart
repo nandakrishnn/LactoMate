@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lactomate/views/admin/drivers/edit_driver_details.dart';
+import 'package:lactomate/widgets/route_animations.dart';
 
 class DropDownMenuSubCatgeory extends StatelessWidget {
   final Color color;
@@ -28,6 +30,7 @@ print(data['DriverId'].toString());
         PopupMenuItem(
           child: ListTile(
             onTap: ()async {
+              Navigator.of(context).push(createRoute(EditDriverDetails(data: data,)));
             },
             leading: Icon(Icons.edit, color: Color(0xff4338CA)),
             title: Text(
@@ -40,8 +43,37 @@ print(data['DriverId'].toString());
         PopupMenuItem(
           child: ListTile(
             onTap: () async {
-             await FirebaseFirestore.instance.collection("DriverDetails").doc(data['DriverId']).delete();
+         showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Are you sure you want to delete this driver?"),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              // Perform the delete operation
+              await FirebaseFirestore.instance
+                  .collection("DriverDetails")
+                  .doc(data['DriverId'])
+                  .delete();
 
+              // Close the dialog after the operation
+              Navigator.of(context).pop();
+            },
+            child: Text('Yes'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Close the dialog without deleting
+              Navigator.of(context).pop();
+            },
+            child: Text('No'),
+          ),
+        ],
+      );
+    },
+  );
+            
             },
             leading: Icon(Icons.delete, color: Colors.red),
             title: Text(

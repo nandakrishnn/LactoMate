@@ -14,10 +14,14 @@ class ShopDetailsAdditionBloc extends Bloc<ShopDetailsAdditionEvent, ShopDetails
    on<ShopLatitudeChanges>(_shopLatitudeChanges);
    on<ShopLongitudeChanges>(_shopLongitudeChanges);
    on<ShopAdressChnages>(_shopAdressChanges);
+    on<ShopTimeStamp>(_shoptimeStamp);
    on<ShopFormSubmit>(_formSubmit);
   }
   void _shopNameChanges(ShopNameChnages event,Emitter<ShopDetailsAdditionState>emit){
     emit(state.copyWith(nameShop: event.name));
+  }
+    void _shoptimeStamp(ShopTimeStamp event,Emitter<ShopDetailsAdditionState>emit){
+    emit(state.copyWith(deliveryStatus: event.timestamp));
   }
    void _shopImageChanges(ShopImageChnages event,Emitter<ShopDetailsAdditionState>emit){
     emit(state.copyWith(imgurl: event.image));
@@ -38,7 +42,9 @@ class ShopDetailsAdditionBloc extends Bloc<ShopDetailsAdditionEvent, ShopDetails
     emit(state.copyWith(status: ShopDetailsStatus.pending));
     try {
       final id=randomAlphaNumeric(5);
-      final shopDetails= shopService.shopDetails(id: id, shopName: state.nameShop!, shopImage: state.imgurl!, shopWeight: state.shopWeight, shopAdress: state.shopAdress, latitiude: state.latitiude, longitue: state.longitue);
+      final shopDetails= shopService.shopDetails(
+        timeStamp: state.deliveryStatus,
+        id: id, shopName: state.nameShop!, shopImage: state.imgurl!, shopWeight: state.shopWeight, shopAdress: state.shopAdress, latitiude: state.latitiude, longitue: state.longitue);
           final added=await shopService.saveDriverDetils(id, shopDetails);
           if(added==true){
             emit(state.copyWith(status: ShopDetailsStatus.sucess));

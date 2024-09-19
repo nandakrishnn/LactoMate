@@ -147,6 +147,7 @@ Map<String, dynamic>? selectedLocation;
                             context.read<ShopDetailsAdditionBloc>().add(ShopLatitudeChanges(selectedLocation!['latitude']));
                             context.read<ShopDetailsAdditionBloc>().add(ShopLongitudeChanges(selectedLocation!['longitude']));
                             context.read<ShopDetailsAdditionBloc>().add(ShopAdressChnages(selectedLocation!['placeName']));
+                              context.read<ShopDetailsAdditionBloc>().add(ShopAdressChnages(''));
                           }
                                  context.read<ShopDetailsAdditionBloc>().add(ShopFormSubmit());
                                
