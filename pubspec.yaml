@@ -49,6 +49,7 @@ dependencies:
   permission_handler: ^11.3.1
   random_string: ^2.3.1
   shared_preferences: ^2.3.2
+  syncfusion_flutter_charts: ^27.1.48
 
 dev_dependencies:
   flutter_lints: ^3.0.0

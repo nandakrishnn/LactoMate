@@ -15,6 +15,7 @@ class ShopDetailsAdditionBloc extends Bloc<ShopDetailsAdditionEvent, ShopDetails
    on<ShopLongitudeChanges>(_shopLongitudeChanges);
    on<ShopAdressChnages>(_shopAdressChanges);
     on<ShopTimeStamp>(_shoptimeStamp);
+    on<UpdateShopFormSubmit>(_updateShopDetails);
    on<ShopFormSubmit>(_formSubmit);
   }
   void _shopNameChanges(ShopNameChnages event,Emitter<ShopDetailsAdditionState>emit){
@@ -54,5 +55,20 @@ class ShopDetailsAdditionBloc extends Bloc<ShopDetailsAdditionEvent, ShopDetails
     } catch (e) {
        emit(state.copyWith(status: ShopDetailsStatus.failure));
     }
+  }
+
+
+     void _updateShopDetails(UpdateShopFormSubmit event,Emitter<ShopDetailsAdditionState>emit)async{
+         emit(state.copyWith(status: ShopDetailsStatus.pending));
+        try {
+          final updated=shopService.updateDriverDetails(event.id, event.name, event.image, event.payload,  event.adress, event.latitude, event.longitude);
+          if(updated==true){
+                  emit(state.copyWith(status: ShopDetailsStatus.sucess));
+          }else{
+                emit(state.copyWith(status: ShopDetailsStatus.failure));
+          }
+        } catch (e) {
+              emit(state.copyWith(status: ShopDetailsStatus.failure));
+        }
   }
 }

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:lactomate/utils/colors.dart';
 import 'package:lactomate/utils/constants.dart';
+import 'package:lactomate/widgets/three_dots.dart';
+import 'package:lactomate/widgets/three_shop_dots.dart';
 
 class PaymentItem extends StatelessWidget {
+  final data;
   final String title;
   final String? category;
   final String imageUrl;
+  final String deliveryStamp;
   final String amount;
 
   const PaymentItem(
@@ -12,10 +17,13 @@ class PaymentItem extends StatelessWidget {
       required this.title,
       this.category,
       required this.imageUrl,
-      required this.amount});
+      required this.amount, this.data, required this.deliveryStamp});
 
   @override
   Widget build(BuildContext context) {
+    // print(data['DeliveryTimeStamp']);
+    // print(amount);
+    // print(deliveryStamp);
     return Container(
       height: 150,
       padding: const EdgeInsets.all(10),
@@ -66,26 +74,31 @@ class PaymentItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
+                      DropDownMenuSubCatgeoryShop(
+             data: data,
+                          color: AppColors.appcolorCream,
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: AppColors.appcolorCream,
+                          ),
+                        )
+                    
+                  ],
                 ),
                 const SizedBox(
                   height: 2,
                 ),
-                // (category == null)
-                //     ? const SizedBox.shrink()
-                //     : Text(category!,
-                //         style: TextStyle(
-                //             color: Colors.yellow.shade200.withOpacity(0.7),
-                //             fontSize: 14, // Decreased font size
-                //             fontWeight: FontWeight.w600)),
-                // const SizedBox(
-                //   height: 4,
-                // ),
+             
                 Row(
              
                   children: [
@@ -106,6 +119,12 @@ class PaymentItem extends StatelessWidget {
                     ),
                   ],
                 ),
+                // Text('Delivered on: '+deliveryStamp,
+                //       style: const TextStyle(
+                //           color: Colors.white,
+                //           fontSize: 14,
+
+                //           fontWeight: FontWeight.w600),)
               ],
             ),
           ),

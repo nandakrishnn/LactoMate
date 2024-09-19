@@ -1,5 +1,6 @@
 part of 'add_driver_details_bloc.dart';
 enum DriverUploadStatus{inital,pending,sucess,failure}
+
  class AddDriverDetailsState{
   AddDriverDetailsState({
      this.id='',

@@ -33,6 +33,25 @@ part of 'shop_details_addition_bloc.dart';
     final dynamic timestamp ;
     ShopTimeStamp(this.timestamp);
   }
+  final class UpdateShopFormSubmit extends ShopDetailsAdditionEvent{
+UpdateShopFormSubmit({
+required this.name,
+required this.adress,
+required this.image,
+required this.latitude,
+required this.longitude,
+required this.id,
+required this.payload,
+});
+    final String name;
+        final String image;
+            final dynamic payload;
+                final dynamic latitude;
+                    final dynamic longitude ;
+                    final String id;
+                        final dynamic adress ;
+  }
+
   final class ShopFormSubmit extends ShopDetailsAdditionEvent{
 
   }

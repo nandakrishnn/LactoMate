@@ -39,7 +39,6 @@ class RoutesList extends StatelessWidget {
                 itemCount: data.length,
                 itemBuilder: (context, index) {
                   final routeData = data[index];
-
                   return FutureBuilder<Map<String, dynamic>>(
                     future: DriverService().getDriverDetail(routeData['AssignedDriver']),
                     builder: (context, snapshot) {

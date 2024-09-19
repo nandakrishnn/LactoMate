@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:lactomate/services/driver_service.dart';
+import 'package:lactomate/utils/colors.dart';
 import 'package:lactomate/utils/constants.dart';
 import 'package:lactomate/utils/validators.dart';
 import 'package:lactomate/views/admin/admin_home.dart';
 import 'package:lactomate/views/driver_view/bottom_nav_worker.dart';
 import 'package:lactomate/views/driver_view/home_driver.dart';
+import 'package:lactomate/widgets/custom_snack.dart';
 import 'package:lactomate/widgets/login_button.dart';
 import 'package:lactomate/widgets/route_animations.dart';
 import 'package:lactomate/widgets/textformfeild.dart';
@@ -23,6 +25,7 @@ class WorkerLoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appcolorCream,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -31,14 +34,15 @@ class WorkerLoginPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * .08,
-                ),
+                  height: 230,
+                  child: Image.asset('assets/Screenshot_2024-09-19_175351-removebg-preview.png',fit: BoxFit.cover,),),
+             
                 const Text(
                   'Welcome back! Glad to see you, Again!',
-                  style: TextStyle(fontSize: 31, fontWeight: FontWeight.w800),
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * .06,
+                  height: MediaQuery.of(context).size.height * .05,
                 ),
                 CustomTextFeild(
                   obscure: false,
@@ -54,10 +58,7 @@ class WorkerLoginPage extends StatelessWidget {
                   obscure: true,
                   hinttext: 'Enter your Password',
                   controller: passController,
-                  sufixbutton: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.remove_red_eye),
-                  ),
+                
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Enter your password';
@@ -92,9 +93,7 @@ class WorkerLoginPage extends StatelessWidget {
                                 .push(createRoute(BottomNavigation()));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      'Invalid credentials. Please try again.')),
+                            customSnack('Invalid Crediential', 'Invalid credentials. Please try again.', Icon(Icons.error), Colors.red)
                             );
                           }
                         }

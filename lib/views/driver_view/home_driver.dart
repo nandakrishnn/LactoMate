@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lactomate/utils/colors.dart';
 import 'package:location/location.dart'; // Import for location
 import 'package:lactomate/utils/constants.dart';
 import 'package:lactomate/views/driver_view/map_driver_home.dart';
@@ -85,6 +86,7 @@ class _DrivesWorkSpaceState extends State<DrivesWorkSpace> {
     }
 
     return Scaffold(
+      backgroundColor: AppColors.appcolorCream,
       body: Column(
         children: [
           SizedBox(

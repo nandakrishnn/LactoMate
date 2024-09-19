@@ -44,6 +44,8 @@ class ShopsList extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: PaymentItem(
+                    deliveryStamp: data[index]['DeliveryTimeStamp'],
+                    data: data[index],
                     category: data[index]['ShopAdress'],
                     title: data[index]['ShopName'],
                     imageUrl: data[index]['ShopImage'],

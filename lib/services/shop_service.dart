@@ -37,4 +37,33 @@ Stream<QuerySnapshot<Object?>> getShopDetails(){
   return FirebaseFirestore.instance.collection("ShopDetails").snapshots();
 
 }
+
+
+  Future<bool> updateDriverDetails(
+  String id,
+ String shopName,
+ String shopImage,
+   dynamic shopWeight,
+
+  dynamic shopAdress,
+  dynamic latitiude,
+  dynamic longitue,
+  ) async {
+    try {
+      DocumentReference driverCategory =
+          FirebaseFirestore.instance.collection("ShopDetails").doc(id);
+      await driverCategory.update({
+   'ShopName':shopName,
+'ShopImage':shopImage,
+'ShopAdress':shopAdress,
+'PayLoad':shopWeight,
+'Longitude':longitue,
+'Latitude':latitiude,
+  
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

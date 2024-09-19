@@ -18,10 +18,12 @@ class AddDriverDetailsBloc
     on<DriverId>(_driverId);
     on<DriverRouteChnages>(_driverRouteChnages);
     on<DriverFormSubmit>(_formSubmit);
+    on<UpdateFormSubmitDriver>(_updateFormSubmit);
   }
+
   void _driverimageChnages(
       DriverImageChnages event, Emitter<AddDriverDetailsState> emit) {
-        print(state.driverImg);
+    print(state.driverImg);
     emit(state.copyWith(driverImg: event.img));
   }
 
@@ -29,12 +31,13 @@ class AddDriverDetailsBloc
       DriverNameChanges event, Emitter<AddDriverDetailsState> emit) {
     emit(state.copyWith(driverName: event.driverName));
   }
-    void _driverRouteChnages(
+
+  void _driverRouteChnages(
       DriverRouteChnages event, Emitter<AddDriverDetailsState> emit) {
     emit(state.copyWith(driverRoute: event.driverRoute));
   }
-   void _driverId(
-      DriverId event, Emitter<AddDriverDetailsState> emit) {
+
+  void _driverId(DriverId event, Emitter<AddDriverDetailsState> emit) {
     emit(state.copyWith(driverId: event.driverId));
   }
 
@@ -64,8 +67,8 @@ class AddDriverDetailsBloc
     try {
       final id = randomAlphaNumeric(6);
       final driverMap = driverService.workerDetails(
-        driverRoute: state.driverRoute!,
-        driverCode: state.driverId!,
+          driverRoute: state.driverRoute!,
+          driverCode: state.driverId!,
           id: id,
           driverImg: state.driverImg!,
           driverName: state.driverName!,
@@ -75,12 +78,35 @@ class AddDriverDetailsBloc
           driverDob: state.driverDob!);
       final added = await driverService.saveDriverDetils(id, driverMap);
       if (added == true) {
-       emit( state.copyWith(status: DriverUploadStatus.sucess));
+        emit(state.copyWith(status: DriverUploadStatus.sucess));
       } else {
         emit(state.copyWith(status: DriverUploadStatus.failure));
       }
     } catch (e) {
-       emit(state.copyWith(status: DriverUploadStatus.failure));
+      emit(state.copyWith(status: DriverUploadStatus.failure));
+    }
+  }
+
+  void _updateFormSubmit(
+      UpdateFormSubmitDriver event, Emitter<AddDriverDetailsState> emit) async {
+    try {
+      emit(state.copyWith(status: DriverUploadStatus.inital));
+      final added = await driverService.updateDriverDetails(
+          event.id,
+          event.img,
+          event.driverName,
+          event.driverEmail,
+          event.driverPhone,
+          event.driverLicenseImg,
+          event.driverDob,
+          event.driverId);
+      if (added == true) {
+        emit(state.copyWith(status: DriverUploadStatus.sucess));
+      } else {
+        emit(state.copyWith(status: DriverUploadStatus.failure));
+      }
+    } catch (e) {
+        emit(state.copyWith(status: DriverUploadStatus.failure));
     }
   }
 }
